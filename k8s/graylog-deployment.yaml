@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graylog
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        service: graylog
+    spec:
+      containers:
+      - env:
+        - name: GRAYLOG_WEB_ENDPOINT_URI
+          value: http://127.0.0.1:9000/api
+        - name: GRAYLOG_PASSWORD_SECRET
+          value: my_salt_password
+        - name: GRAYLOG_ROOT_PASSWORD_SHA2
+          value: 4f3e60ceaa6f519e8b62026864d74934ac656c5cf94ed17df0308ea82ca0595a
+        image: graylog2/server:2.4.3-1
+        name: graylog
+        ports:
+        - containerPort: 9000
+        - containerPort: 12201
+        resources: {}
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      service: graylog

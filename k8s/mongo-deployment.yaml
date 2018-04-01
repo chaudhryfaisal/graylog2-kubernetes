@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        service: mongo
+    spec:
+      containers:
+      - image: mongo:3
+        name: mongo
+        resources: {}
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      service: mongo
+
